@@ -1,4 +1,13 @@
-"use strinct"
+"use strict"
+
+String.prototype.isSymbol = function() {
+  return !!this.match(/[_\W]/)
+}
+
+Array.prototype.getNextNonSymbolicValue = function(position) {
+  console.log(this)
+  console.log(position)
+}
 
 window.onload = () => {
   let maskFields = _getMaskFields()
@@ -25,24 +34,43 @@ function validateMask(field, mask, event) {
   let splitMask = mask.split('')
 
   try {
-    if (!_validateDigit(splitMask[lastDigitPosition], event.key, field))
+    if (!_validateDigit(splitMask, lastDigitPosition,  event.key, field))
       event.preventDefault()
   } catch (e) {
     event.preventDefault()
   }
 }
 
-function _validateDigit(digitMask, key, field) {
-  if (+digitMask)
-    return _numericValidation(digitMask, key)
-  else if (digitMask.match(/[_\W]/)){
-    field.value = field.value.concat(digitMask)
+function _validateDigit(splitMask, lastDigitPosition, key, field) {
+  let digitMask = splitMask[lastDigitPosition]
+
+  if (+splitMask.getNextNonSymbolicValue(lastDigitPosition))
+    return _numericValidation(digitMask, key, field)
+
+  else if (digitMask == "#") 
     return true
-  }
+
+  else if (digitMask.isSymbol()) 
+    return field.value = _concatSymbols(field, splitMask, lastDigitPosition)
 }
 
-function _numericValidation(digitMask, key) {
-  if (+key <= digitMask) {
+function _concatSymbols(field, splitMask, lastDigitPosition) {
+  let symbols = ''
+  for (let i = lastDigitPosition; i < splitMask.length; i++) 
+    if (splitMask[i].isSymbol()) symbols = symbols.concat(splitMask[i])
+    else break
+
+  return field.value.concat(symbols)
+}
+
+function _numericValidation(digitMask, key, field) {
+  if (field.hasAttribute("inverted-numbers"))
+    if (+key >= digitMask)
+      return true
+    else return false
+
+  else if (+key <= digitMask) 
     return true
-  } else return false
+
+  else return false
 }
