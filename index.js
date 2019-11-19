@@ -10,21 +10,6 @@ window.onload = () => {
   _setupMaskEvents(maskFields, masks)
 }
 
-function _getMaskFields() {
-  return Array.from(document.getElementsByClassName('maskField'))
-}
-
-function _getMasks(maskFields) {
-  return maskFields.map(input => input.getAttribute("mask"))
-}
-
-function _setupMaskEvents(maskFields, masks) {
-  maskFields.forEach((field, index) => {
-    field.addEventListener('keypress', (event) => validateMask(field, masks[index], event))
-    field.addEventListener('change', (event) => fullyValidateMask(field, masks[index], event))
-  })
-}
-
 function validateMask(field, mask, event) {
   let lastDigitPosition = field.value.length
   let splitMask = mask.split('')
@@ -37,11 +22,16 @@ function validateMask(field, mask, event) {
   }
 }
 
+function fullyValidateChange(field, mask, event) {
+  _addSymbols(field, mask)
+  fullyValidateMask(field, mask, event)
+}
+
 function fullyValidateMask(field, mask, event) {
   let validatedMask = ''
-  try{
+  try {
 
-    field.value.split('').forEach( (digit, index) => {
+    field.value.split('').forEach((digit, index) => {
 
       if (_validateDigit(mask.split(''), index, digit, field, true))
         return validatedMask = validatedMask.concat(digit)
@@ -53,9 +43,52 @@ function fullyValidateMask(field, mask, event) {
 
     })
 
-  } catch(e) {
+  } catch (e) {
     return field.value = validatedMask
   }
+}
+
+function _getMaskFields() {
+  return Array.from(document.getElementsByClassName('maskField'))
+}
+
+function _getMasks(maskFields) {
+  return maskFields.map(input => input.getAttribute("mask"))
+}
+
+function _addSymbols(field, mask) {
+  let splitMask = mask.split('')
+  let splitValue = field.value.split('')
+  try{
+    splitMask.forEach((digit, index) => {
+      if (index > splitValue.length) throw "mask is bigger than input value" 
+      if (digit.isSymbol() && splitValue[index] != digit) 
+        splitValue = _insertSymbol(splitValue.join(''), index, digit).split('')
+    })
+  } catch(e) {}
+  field.value = splitValue.join('')
+}
+
+function _insertSymbol(fieldValue, index, symbol) {
+  let splitValue = fieldValue.split('')
+  let firstHalf = fieldValue.substr(0, index)
+  let secondHalf = splitValue.splice(index).join('')
+  return firstHalf + symbol + secondHalf
+}
+
+function _setupMaskEvents(maskFields, masks) {
+  maskFields.forEach((field, index) => {
+    field.addEventListener('keypress', (event) => {
+      _addSymbols(field, masks[index])
+      validateMask(field, masks[index], event)
+    })
+    field.addEventListener('change', (event) => fullyValidateChange(field, masks[index], event))
+    field.addEventListener('paste', (event) => {
+      field.value = (event.clipboardData || window.clipboardData).getData('text')
+      fullyValidateChange(field, masks[index], event)
+      event.preventDefault()
+    })
+  })
 }
 
 function _shouldThisInvalidDigitBeHere(digit, mask) {
@@ -85,7 +118,7 @@ function _concatSymbols(field, splitMask, lastDigitPosition) {
   let symbols = ''
   for (let i = lastDigitPosition; i < splitMask.length; i++)
     if (splitMask[i].isSymbol()) symbols = symbols.concat(splitMask[i])
-    else break 
+    else break
 
   return field.value.concat(symbols)
 }
