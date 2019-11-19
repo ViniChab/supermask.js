@@ -10,6 +10,14 @@ window.onload = () => {
   _setupMaskEvents(maskFields, masks)
 }
 
+function removeAllSymbols(field) {
+  let splitValue = field.value.split('')
+  return splitValue.map( digit => {
+    if (digit.isSymbol()) return ''
+    return digit
+  }).join('')
+}
+
 function validateMask(field, mask, event) {
   let lastDigitPosition = field.value.length
   let splitMask = mask.split('')
@@ -59,13 +67,13 @@ function _getMasks(maskFields) {
 function _addSymbols(field, mask) {
   let splitMask = mask.split('')
   let splitValue = field.value.split('')
-  try{
+  try {
     splitMask.forEach((digit, index) => {
-      if (index > splitValue.length) throw "mask is bigger than input value" 
-      if (digit.isSymbol() && splitValue[index] != digit) 
+      if (index > splitValue.length) throw "mask is bigger than input value"
+      if (digit.isSymbol() && splitValue[index] != digit)
         splitValue = _insertSymbol(splitValue.join(''), index, digit).split('')
     })
-  } catch(e) {}
+  } catch (e) { }
   field.value = splitValue.join('')
 }
 
@@ -78,14 +86,19 @@ function _insertSymbol(fieldValue, index, symbol) {
 
 function _setupMaskEvents(maskFields, masks) {
   maskFields.forEach((field, index) => {
+    field.addEventListener('input', (event) => {
+      //if (event.inputType == "deleteContentBackward")
+        //fullyValidateChange(field, masks[index], event)
+    })
     field.addEventListener('keypress', (event) => {
-      _addSymbols(field, masks[index])
       validateMask(field, masks[index], event)
     })
     field.addEventListener('change', (event) => fullyValidateChange(field, masks[index], event))
     field.addEventListener('paste', (event) => {
-      field.value = (event.clipboardData || window.clipboardData).getData('text')
-      fullyValidateChange(field, masks[index], event)
+      if (!field.hasAttribute("blockpasting")){
+        field.value = (event.clipboardData || window.clipboardData).getData('text')
+        fullyValidateChange(field, masks[index], event)
+      }
       event.preventDefault()
     })
   })
@@ -134,3 +147,7 @@ function _numericValidation(digitMask, key, field) {
 
   else return false
 }
+
+// TODO usuário criar funções para eventos específicos
+// TODO maiśculas e minúsculas
+// TODO range de letras
