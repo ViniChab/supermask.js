@@ -10,14 +10,6 @@ window.onload = () => {
   _setupMaskEvents(maskFields, masks)
 }
 
-function removeAllSymbols(field) {
-  let splitValue = field.value.split('')
-  return splitValue.map( digit => {
-    if (digit.isSymbol()) return ''
-    return digit
-  }).join('')
-}
-
 function validateMask(field, mask, event) {
   let lastDigitPosition = field.value.length
   let splitMask = mask.split('')
@@ -88,14 +80,14 @@ function _setupMaskEvents(maskFields, masks) {
   maskFields.forEach((field, index) => {
     field.addEventListener('input', (event) => {
       //if (event.inputType == "deleteContentBackward")
-        //fullyValidateChange(field, masks[index], event)
+      //fullyValidateChange(field, masks[index], event)
     })
     field.addEventListener('keypress', (event) => {
       validateMask(field, masks[index], event)
     })
     field.addEventListener('change', (event) => fullyValidateChange(field, masks[index], event))
     field.addEventListener('paste', (event) => {
-      if (!field.hasAttribute("blockpasting")){
+      if (!field.hasAttribute("blockpasting")) {
         field.value = (event.clipboardData || window.clipboardData).getData('text')
         fullyValidateChange(field, masks[index], event)
       }
@@ -115,9 +107,11 @@ function _validateDigit(splitMask, lastDigitPosition, key, field, isFullValidati
     return false
 
   if (digitMask.isSymbol()) {
-    if (!isFullValidation)
+    if (!isFullValidation) {
       field.value = _concatSymbols(field, splitMask, lastDigitPosition)
-    return _validateDigit(splitMask, (lastDigitPosition + 1), key, field)
+      return _validateDigit(splitMask, field.value.length, key, field)
+    }
+    return _validateDigit(splitMask, (lastDigitPosition + 1), key, field, true)
   }
 
   if (+digitMask)
