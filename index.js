@@ -1,7 +1,19 @@
 "use strict"
 
 String.prototype.isSymbol = function () {
-  return !!this.match(/(?![#])[_\W]/)
+  return !!this.match(/(?![Ã])(?![Á])[_\W]/)
+}
+
+String.prototype.isLowerCaseLetter = function () {
+  return !!this.match(/[a-z]/)
+}
+
+String.prototype.isUpperCaseLetter = function () {
+  return !!this.match(/[A-Z]/)
+}
+
+String.prototype.isLetter = function () {
+  return !!this.match(/[a-z\A-Z]/)
 }
 
 window.onload = () => {
@@ -79,8 +91,19 @@ function _insertSymbol(fieldValue, index, symbol) {
 function _setupMaskEvents(maskFields, masks) {
   maskFields.forEach((field, index) => {
     field.addEventListener('input', (event) => {
-      //if (event.inputType == "deleteContentBackward")
-      //fullyValidateChange(field, masks[index], event)
+      switch (event.inputType) {
+        case "deleteContentForward":
+            _validateBackspaceButton(field, masks[index], "delete")
+          break
+
+        case "deleteContentBackward":
+          _validateBackspaceButton(field, masks[index])
+          break
+
+        case "insertFromDrop":
+          fullyValidateChange(field, masks[index], event)
+          break
+      }
     })
     field.addEventListener('keypress', (event) => {
       validateMask(field, masks[index], event)
@@ -94,6 +117,26 @@ function _setupMaskEvents(maskFields, masks) {
       event.preventDefault()
     })
   })
+}
+
+function _validateBackspaceButton(field, mask, deletionType = "backspace") {
+  let caretPosition = _getCaretPos(field)
+  let deletedCharacter = mask[caretPosition]
+
+  if (deletedCharacter.isSymbol() && field.value.split('')[caretPosition]) {
+    field.value = _insertSymbol(field.value, caretPosition, deletedCharacter)
+
+    switch (deletionType) {
+      case "backspace":
+        _setCaretPosition(field, caretPosition)
+        break
+
+      case "delete":
+        _setCaretPosition(field, caretPosition + 1)
+        break
+    }
+
+  }
 }
 
 function _shouldThisInvalidDigitBeHere(digit, mask) {
@@ -117,8 +160,18 @@ function _validateDigit(splitMask, lastDigitPosition, key, field, isFullValidati
   if (+digitMask)
     return _numericValidation(digitMask, key, field)
 
-  if (digitMask == "#")
+  if (digitMask.isUpperCaseLetter() && key.isUpperCaseLetter())
     return true
+
+  if (digitMask.isLowerCaseLetter() && key.isLowerCaseLetter())
+    return true
+
+  if (digitMask == "Á" && key.isLetter())
+    return true
+
+  if (digitMask == "Ã")
+    return true
+
 }
 
 function _concatSymbols(field, splitMask, lastDigitPosition) {
@@ -142,6 +195,27 @@ function _numericValidation(digitMask, key, field) {
   else return false
 }
 
-// TODO usuário criar funções para eventos específicos
-// TODO maiśculas e minúsculas
-// TODO range de letras
+function _setCaretPosition(field, caretPos) {
+  if (field.createTextRange) {
+    let range = field.createTextRange()
+    range.move('character', caretPos)
+    range.select()
+  }
+  else if (field.selectionStart) {
+    field.focus()
+    field.setSelectionRange(caretPos, caretPos)
+  }
+  else field.focus()
+}
+
+function _getCaretPos(field) {
+  let range, bookmark, caret_pos
+  if (document.selection && document.selection.createRange) {
+    range = document.selection.createRange()
+    bookmark = range.getBookmark()
+    caret_pos = bookmark.charCodeAt(2) - 2
+  } else if (field.setSelectionRange)
+    caret_pos = field.selectionStart
+
+  return caret_pos
+}
