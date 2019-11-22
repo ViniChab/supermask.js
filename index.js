@@ -41,6 +41,8 @@ function fullyValidateChange(field, mask, event) {
 
 function fullyValidateMask(field, mask, event) {
   let validatedMask = ''
+  let finalSymbols = _getFinalMaskSymbols(mask)
+
   try {
 
     field.value.split('').forEach((digit, index) => {
@@ -56,8 +58,20 @@ function fullyValidateMask(field, mask, event) {
     })
 
   } catch (e) {
-    return field.value = validatedMask
+    return field.value = validatedMask + finalSymbols.join('')
   }
+}
+
+function _getFinalMaskSymbols(mask) {
+  let finalSymbols = []
+  let reverseSplitMask = mask.split('').reverse()
+  try {
+    reverseSplitMask.forEach(digit => {
+      if (digit.isSymbol()) finalSymbols.push(digit)
+      else throw "Reached a non-symbolic value"
+    })
+  } catch (e) { }
+  return finalSymbols
 }
 
 function _getMaskFields() {
@@ -69,8 +83,10 @@ function _getMasks(maskFields) {
 }
 
 function _addSymbols(field, mask) {
+  if (field.value.length == 0) return field.value
   let splitMask = mask.split('')
   let splitValue = field.value.split('')
+
   try {
     splitMask.forEach((digit, index) => {
       if (index > splitValue.length) throw "mask is bigger than input value"
@@ -93,7 +109,7 @@ function _setupMaskEvents(maskFields, masks) {
     field.addEventListener('input', (event) => {
       switch (event.inputType) {
         case "deleteContentForward":
-            _validateBackspaceButton(field, masks[index], "delete")
+          _validateBackspaceButton(field, masks[index], "delete")
           break
 
         case "deleteContentBackward":
