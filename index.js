@@ -235,3 +235,6 @@ function _getCaretPos(field) {
 
   return caret_pos
 }
+
+// TODO adicionar letra na máscara
+// TODO adicionar uns comentários nas funções
