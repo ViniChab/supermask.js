@@ -28,11 +28,9 @@ function _shouldThisInvalidDigitBeHere(digit, mask) {
   return digit == mask
 }
 
-window.onload = () => {
-  let maskFields = _getMaskFields()
-  let masks = _getMasks(maskFields)
-  _setupMaskEvents(maskFields, masks)
-}
+let maskFields = _getMaskFields()
+let masks = _getMasks(maskFields)
+_setupMaskEvents(maskFields, masks)
 
 // Constructor function
 function _setupMaskEvents(maskFields, masks) {
