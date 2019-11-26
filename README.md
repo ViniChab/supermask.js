@@ -1,7 +1,7 @@
 What is Supermask.js?
 ===================================
 
-Supermask.js is a full-javascript mask, supposed to work in any of the big browsers. Since it's pure javascript, and consists of only one file, it should be simple enough to be pulg'n play for any kind of framework you might use (AngularJS, Angular 2+, React, Vue, plain JS, and so on).
+Supermask.js is a full-javascript mask, supposed to work in any of the big browsers. Since it's pure javascript, and consists of only one file, it should be simple enough to be plug'n play for any kind of framework you might use (AngularJS, Angular 2+, React, Vue, plain JS, and so on).
 
 Why is Supermask.js?
 ===================================
@@ -12,28 +12,27 @@ Supermask.js is a desperate attempt for a decent mask in an AngularJS (1.0.0) ap
 How do I use it?
 ===================================
 
-It should be very plug'n play. Just import download the project here at GitHub, and do the following:
+It should be very plug'n play. Just download the project here on GitHub, and do the following:
 
 
 - Import the mask:
 
-		<script src="index.js"></script>
+      <script src="index.js"></script>
 
 Since window.onload does not work everywhere, the import should be put at the end of your HTML file, to make sure every field has already loaded on your view.
 
 - Add the class and mask to your field:
 
-
-    <input
-      mask="999.999.999-99"
-      class="maskField">
+      <input
+        mask="999.999.999-99"
+        class="maskField">
 
 Those are the only requirements for the mask to work. You can add as any fields as you want in your HTML, the mask will know how to handle it.
 
 How do I create a mask?
 ===================================
 
-The mask is an attribute your field will have. The mask may consist of numbers, symbols, and letters.
+The mask is an attribute your field will have. It may consist of numbers, symbols, and letters.
 
 - Numbers:
 
@@ -41,7 +40,7 @@ The mask is an attribute your field will have. The mask may consist of numbers, 
 
 - Inverted numbers:
 
-If you add the 'inverted-numbers' attribute to any mask field, the numbers of the mask will actually represent the minimum value that can be inputted in that position. For example, if hte mask has any '8' in it, it means that the only accepted numbers in that position are 8 and 9.
+If you add the 'inverted-numbers' attribute to any mask field, the numbers of the mask will actually represent the minimum value that can be inputted in that position. For example, if the mask has any '8' in it, it means that the only accepted numbers in that position are 8 and 9.
 
 - Any letter:
 
@@ -63,19 +62,19 @@ Now, if you want to allow a specific position to accept anything, from numbers t
 
 If you want to stop your user from pasting inside the field, you can just add the 'blockpasting' attribute. NOTE: Pasting is allowed by default, and the mask will work normally even if the pasted value has no mask (or half a mask).
 
+- Symbols:
+
+Any symbol present in your mask definition will be automatically added when your user is inputting in the field. For example, all the dashes in the mask '99-99-99' will be added while the user types, on pasting, and validated on focusout. The symbols will also be validated and added if the input receives a value via drag and drop.
 
 Where can I see this working?
 ===================================
 
 If you want to take a look at the mask's UX, you can check it here: https://supermaskjs.stackblitz.io
-And if you want to play with it a little bit, take a look here: https://stackblitz.com/edit/supermaskjs?file=index.html
 
-
-
-
-
+And if you want to play with its code a little bit, take a look here: https://stackblitz.com/edit/supermaskjs?file=index.html
 
 
 
 That's all, folks!
-Please, take a moment to connect with me on Linkedin: https://www.linkedin.com/in/vinícius-chab/
+===================================
+Please, take a moment to connect with me on Linkedin: https://www.linkedin.com/in/vinícius-chab/, and have a great day!
