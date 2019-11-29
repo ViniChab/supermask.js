@@ -78,3 +78,7 @@ And if you want to play with its code a little bit, take a look here: https://st
 That's all, folks!
 ===================================
 Please, take a moment to connect with me on Linkedin: https://www.linkedin.com/in/vinícius-chab/, and have a great day!
+
+License
+===================================
+MIT
