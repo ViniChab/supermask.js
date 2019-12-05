@@ -81,4 +81,4 @@ Please, take a moment to connect with me on Linkedin: https://www.linkedin.com/i
 
 License
 ===================================
-MIT
+MIT - Vinícius S. Chab
