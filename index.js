@@ -207,6 +207,7 @@ function _concatSymbols(field, splitMask, lastDigitPosition) {
   return field.value.concat(symbols)
 }
 
+// Will set the carret position
 function _setCaretPosition(field, caretPos) {
   if (field.createTextRange) {
     let range = field.createTextRange()
@@ -220,6 +221,7 @@ function _setCaretPosition(field, caretPos) {
   else field.focus()
 }
 
+// Will get the carret position
 function _getCaretPos(field) {
   let range, bookmark, caret_pos
   if (document.selection && document.selection.createRange) {
@@ -232,6 +234,7 @@ function _getCaretPos(field) {
   return caret_pos
 }
 
+// Will validate a number in a specific position
 function _numericValidation(digitMask, key, field) {
   if (field.hasAttribute("inverted-numbers"))
     if (+key >= digitMask)
