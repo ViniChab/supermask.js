@@ -1,0 +1,24 @@
+{
+  "name": "supermask-js",
+  "version": "1.0.0",
+  "description": "\"A reliable and usable pure-js mask\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViniChab/supermask.js.git"
+  },
+  "keywords": [
+    "mask",
+    "purejs-mask",
+    "js-mask"
+  ],
+  "author": "Vinícius S. Chab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ViniChab/supermask.js/issues"
+  },
+  "homepage": "https://github.com/ViniChab/supermask.js#readme"
+}
