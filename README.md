@@ -68,7 +68,7 @@ Any symbol present in your mask definition will be automatically added when your
 
 Dynamic mask change
 ===================================
-If you want to change a mask dynamically, all you have to do is change it's "mask" attribute, and then run the "rebuildMasks" function, that will be responsible for rebuild the mask events in each field.
+If you want to change a mask dynamically, all you have to do is change it's "mask" attribute, and then run the "rebuildMasks" function, that will be responsible for rebuilding the mask events in each field (more to come).
 
 Where can I see this working?
 ===================================
