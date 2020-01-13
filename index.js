@@ -32,6 +32,13 @@ let maskFields = _getMaskFields()
 let masks = _getMasks(maskFields)
 _setupMaskEvents(maskFields, masks)
 
+// Rebuilding a mask if you change the mask attr dynamically
+function rebuildMasks() {
+  maskFields = _getMaskFields()
+  masks = _getMasks(maskFields)
+  _setupMaskEvents(maskFields, masks)
+}
+
 // Constructor function
 function _setupMaskEvents(maskFields, masks) {
   maskFields.forEach((field, index) => {
@@ -46,18 +53,18 @@ function _setupMaskEvents(maskFields, masks) {
           break
 
         case "insertFromDrop":
-          fullyValidateChange(field, masks[index], event)
+          _fullyValidateChange(field, masks[index], event)
           break
       }
     })
     field.addEventListener('keypress', (event) => {
-      validateMask(field, masks[index], event)
+      _validateMask(field, masks[index], event)
     })
-    field.addEventListener('change', (event) => fullyValidateChange(field, masks[index], event))
+    field.addEventListener('change', (event) => _fullyValidateChange(field, masks[index], event))
     field.addEventListener('paste', (event) => {
       if (!field.hasAttribute("blockpasting")) {
         field.value = (event.clipboardData || window.clipboardData).getData('text')
-        fullyValidateChange(field, masks[index], event)
+        _fullyValidateChange(field, masks[index], event)
       }
       event.preventDefault()
     })
@@ -65,7 +72,7 @@ function _setupMaskEvents(maskFields, masks) {
 }
 
 // Function to validate mask on type, it'll also add symbols
-function validateMask(field, mask, event) {
+function _validateMask(field, mask, event) {
   let lastDigitPosition = field.value.length
   let splitMask = mask.split('')
 
@@ -78,7 +85,7 @@ function validateMask(field, mask, event) {
 }
 
 // Capsule function to validate field value after focusout
-function fullyValidateChange(field, mask, event) {
+function _fullyValidateChange(field, mask, event) {
   _addSymbols(field, mask)
   fullyValidateMask(field, mask, event)
 }
