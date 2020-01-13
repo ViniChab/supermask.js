@@ -66,6 +66,10 @@ If you want to stop your user from pasting inside the field, you can just add th
 
 Any symbol present in your mask definition will be automatically added when your user is inputting in the field. For example, all the dashes in the mask '99-99-99' will be added while the user types, on pasting, and validated on focusout. The symbols will also be validated and added if the input receives a value via drag and drop.
 
+Dynamic mask change
+===================================
+If you want to change a mask dynamically, all you have to do is change it's "mask" attribute, and then run the "rebuildMasks" function, that will be responsible for rebuild the mask events in each field.
+
 Where can I see this working?
 ===================================
 
