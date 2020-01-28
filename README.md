@@ -77,7 +77,7 @@ If you want to take a look at the mask's UX, you can check it here: https://supe
 
 And if you want to play with its code a little bit, take a look here: https://stackblitz.com/edit/supermaskjs?file=index.html
 
-
+Although, I recommend you download the project and play with the HTML file you'll find. That's because the Stackblitz console won't allow you to call any functions ;/
 
 That's all, folks!
 ===================================
