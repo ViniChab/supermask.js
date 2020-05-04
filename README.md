@@ -3,7 +3,7 @@ What is Supermask.js?
 
 Supermask.js is a full-javascript mask, supposed to work in any of the big browsers. Since it's pure javascript, and consists of only one file, it should be simple enough to be plug'n play for any kind of framework you might use (AngularJS, Angular 2+, React, Vue, plain JS, and so on).
 
-Why is Supermask.js?
+Why?
 ===================================
 
 Supermask.js is a desperate attempt for a decent mask in an AngularJS (1.0.0) app I have to mantain at work. Most pure-js masks are crap, and I couldn't find anything that would work with AngularJS 1.0.0, so I decided to make a mask that would suit my needs, and offer decent user experience.
