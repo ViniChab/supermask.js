@@ -85,4 +85,4 @@ Please, take a moment to connect with me on Linkedin: https://www.linkedin.com/i
 
 License
 ===================================
-MIT - Vinícius dos Santos Chab
+MIT - Vinícius S. Chab
