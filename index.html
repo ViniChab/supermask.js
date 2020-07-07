@@ -1,29 +1,55 @@
 <!DOCTYPE html>
 
 <html>
-
   <head>
     <title>Supermask.js</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- Adding Bootstrap-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
     <!-- Adding Bootstrap-->
   </head>
 
   <body>
-
     <nav class="mb-3 navbar navbar-dark bg-dark">
       <span class="navbar-brand mb-0 h1">
         Supermask.js
       </span>
       <span class="text-light">
-        A Javascript mask by <a target="_blank" class="text-light"  href="https://www.linkedin.com/in/vinícius-chab/">Vinícius Chab</a>
+        A Javascript mask by
+        <a
+          target="_blank"
+          class="text-light"
+          href="https://www.linkedin.com/in/vinícius-chab/"
+          >Vinícius Chab</a
+        >
       </span>
       <span>
-        <a target="_blank" class="text-light" href="https://github.com/ViniChab/supermask.js">Github</a>
+        <a
+          target="_blank"
+          class="text-light"
+          href="https://github.com/ViniChab/supermask.js"
+          >Github</a
+        >
       </span>
     </nav>
 
@@ -31,42 +57,45 @@
     <input
       mask="999.999.999-99"
       class="w-50 ml-2 mb-3 p-3 maskField form-control"
-      placeholder="999.999.999-99">
+      placeholder="999.999.999-99"
+    />
 
     <span class="ml-2 badge badge-dark">Phone number</span>
     <input
       mask="(99) 9 9999-9999"
       class="w-50 ml-2 mb-3 p-3 maskField form-control"
-      placeholder="(59) 9 9999-9999">
+      placeholder="(59) 9 9999-9999"
+    />
 
     <span class="ml-2 badge badge-dark">Document #2</span>
     <input
       mask="99.999.999/9999-99"
       class="w-50 ml-2 mb-3 p-3 maskField form-control"
-      placeholder="99.999.999/9999-99">
+      placeholder="99.999.999/9999-99"
+    />
 
     <span class="ml-2 badge badge-dark">Random license plate</span>
     <input
       mask="AAA-898"
       class="w-50 ml-2 mb-3 p-3 maskField form-control"
-      placeholder="AAA-898">
+      placeholder="AAA-898"
+    />
 
     <span class="ml-2 badge badge-dark">Symbols and inverted numbers</span>
     <input
       inverted-numbers
       mask="-- 999 ÁÁÁ 868 --"
       class="w-50 ml-2 mb-3 p-3 maskField form-control"
-      placeholder="-- 999 ÁÁÁ 868 --  (inverted)">
+      placeholder="-- 999 ÁÁÁ 868 --  (inverted)"
+    />
 
     <span class="ml-2 badge badge-dark">Any and no pasting</span>
     <input
       blockpasting
       mask="ÃÃÃÃ 0000 ÃÃÃ"
       class="w-50 ml-2 mb-3 p-3 maskField form-control"
-      placeholder="ÃÃÃÃ 0000 ÃÃÃ (no pasting)">
-
+      placeholder="ÃÃÃÃ 0000 ÃÃÃ (no pasting)"
+    />
   </body>
-
 </html>
 <script src="index.js"></script>
-

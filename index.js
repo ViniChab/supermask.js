@@ -57,21 +57,14 @@ function _setupMaskEvents(maskFields, masks) {
           break
       }
     })
-    field.addEventListener('keypress', (event) => {
-      _validateMask(field, masks[index], event)
-    })
+
+    field.addEventListener('keyup', (event) => _fullyValidateChange(field, masks[index], event))
+    field.addEventListener('keypress', (event) => _validateMask(field, masks[index], event))
     field.addEventListener('change', (event) => _fullyValidateChange(field, masks[index], event))
-    field.addEventListener('paste', (event) => {
-      if (!field.hasAttribute("blockpasting")) {
-        field.value = (event.clipboardData || window.clipboardData).getData('text')
-        _fullyValidateChange(field, masks[index], event)
-      }
-      event.preventDefault()
-    })
+    field.addEventListener('paste', (event) => _onAfterPaste(event))
   })
 }
 
-// Function to validate mask on type, it'll also add symbols
 function _validateMask(field, mask, event) {
   let lastDigitPosition = field.value.length
   let splitMask = mask.split('')
@@ -84,13 +77,11 @@ function _validateMask(field, mask, event) {
   }
 }
 
-// Capsule function to validate field value after focusout
 function _fullyValidateChange(field, mask, event) {
   _addSymbols(field, mask)
   fullyValidateMask(field, mask, event)
 }
 
-// Function to validate every digit
 function fullyValidateMask(field, mask, event) {
   let validatedMask = ''
   let finalSymbols = _getFinalMaskSymbols(mask)
@@ -123,7 +114,7 @@ function _getFinalMaskSymbols(mask) {
       if (digit.isSymbol()) finalSymbols.push(digit)
       else throw "Reached a non-symbolic value"
     })
-  } catch (e) { }
+  } catch (e) {}
   return finalSymbols
 }
 
@@ -139,7 +130,7 @@ function _addSymbols(field, mask) {
       if (digit.isSymbol() && splitValue[index] != digit)
         splitValue = _insertSymbol(splitValue.join(''), index, digit).split('')
     })
-  } catch (e) { }
+  } catch (e) {}
   field.value = splitValue.join('')
 }
 
@@ -204,31 +195,26 @@ function _validateDigit(splitMask, lastDigitPosition, key, field, isFullValidati
 
 }
 
-// Function to concat symbols at the end of mask
 function _concatSymbols(field, splitMask, lastDigitPosition) {
   let symbols = ''
   for (let i = lastDigitPosition; i < splitMask.length; i++)
     if (splitMask[i].isSymbol()) symbols = symbols.concat(splitMask[i])
-    else break
+  else break
 
   return field.value.concat(symbols)
 }
 
-// Will set the carret position
 function _setCaretPosition(field, caretPos) {
   if (field.createTextRange) {
     let range = field.createTextRange()
     range.move('character', caretPos)
     range.select()
-  }
-  else if (field.selectionStart) {
+  } else if (field.selectionStart) {
     field.focus()
     field.setSelectionRange(caretPos, caretPos)
-  }
-  else field.focus()
+  } else field.focus()
 }
 
-// Will get the carret position
 function _getCaretPos(field) {
   let range, bookmark, caret_pos
   if (document.selection && document.selection.createRange) {
@@ -241,15 +227,22 @@ function _getCaretPos(field) {
   return caret_pos
 }
 
-// Will validate a number in a specific position
 function _numericValidation(digitMask, key, field) {
   if (field.hasAttribute("inverted-numbers"))
     if (+key >= digitMask)
       return true
-    else return false
+  else return false
 
   else if (+key <= digitMask)
     return true
 
   else return false
+}
+
+function _onAfterPaste(event) {
+  if (!field.hasAttribute("blockpasting")) {
+    field.value = field.value + (event.clipboardData || window.clipboardData).getData('text')
+    _fullyValidateChange(field, masks[index], event)
+  }
+  event.preventDefault()
 }
