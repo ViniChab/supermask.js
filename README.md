@@ -81,7 +81,7 @@ Although, I recommend you download the project and play with the HTML file you'l
 
 That's all, folks!
 ===================================
-Please, take a moment to connect with me on Linkedin: linkedin.com/in/vinicius-chab/, and have a great day!
+Please, take a moment to connect with me on Linkedin: https://linkedin.com/in/vinicius-chab/, and have a great day!
 
 License
 ===================================
